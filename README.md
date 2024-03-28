@@ -5,9 +5,6 @@ A Background removing plugin for [Flow Launcher](https://flowlauncher.com/) that
 ![emilia_compressed-ezgif com-optimize (2)](https://github.com/z1nc0r3/remove.bg/assets/64279853/3bf8fd81-34ca-48ce-9cda-82761ae81fb3)
 
 
-
-
-
 ## Features
 
 - Remove the background from an image
