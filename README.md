@@ -1,29 +1,13 @@
-# URL Shortener plugin - Flow Launcher
+# Background Remover Plugin for Flow Launcher
 
-A URL shortening plugin for [Flow Launcher](https://flowlauncher.com/) to quickly shorten any URL using tinyurl.com API.
-
-![image](https://img.shields.io/github/downloads/z1nc0r3/URL-Shortener-Plugin/total) 
-
-![Recording2024-02-04094934-ezgif com-video-to-gif-converter](https://github.com/z1nc0r3/URL-Shortener-Plugin/assets/64279853/2c54f5a2-f2c8-41aa-b75a-3963eddb05b1)
+A Background removing plugin for [Flow Launcher](https://flowlauncher.com/) that uses [remove.bg](https://www.remove.bg/) API to remove the background from an image.
 
 ## Features
 
-- Simple and Fast response
-- Option to copy the URL to the clipboard
-- Option to open the URL in the browser
-- Completely open-source
+- Remove background from an image
+- Save the image to the clipboard
+- File path or URL can be used as input
 
 ## Usage
 
-The following commands are available for the plugin.
-
-| Command                                                          | Description                   | Example                                                                                                                                                               |
-|------------------------------------------------------------------|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `` us ``                                                          | Trigger the plugin       | `` us `` to trigger the plugin                                                                                                                                 |
-| `` us <URL> ``                     | Run URL shortener                  | `` us www.google.com `` to run the URL shortener with the "www.google.com" as the input                              |
-| `` us <URL> ``                     | Copy URL to clipboard                  |                               |
-| `` us <URL> ``                     | Open the URL in browser                  |                              |
-
-
-
-
+Type `bg` followed by the path to the image file or the URL of the image.
