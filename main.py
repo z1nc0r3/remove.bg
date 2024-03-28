@@ -1,7 +1,7 @@
 # Author: Lasith Manujitha
 # Github: @z1nc0r3
-# Description: A simple plugin to shorten URLs using tinyurl.com
-# Date: 2024-02-04
+# Description: Remove background from images using remove.bg API
+# Date: 2024-03-28
 
 import sys, os
 
@@ -11,17 +11,19 @@ sys.path.append(os.path.join(parent_folder_path, "lib"))
 sys.path.append(os.path.join(parent_folder_path, "plugin"))
 
 from flowlauncher import FlowLauncher
-import webbrowser
 import requests
-import pyperclip
+from pathlib import Path
 import re
 
 
 class Shortener(FlowLauncher):
 
-    def isValidURL(self, str):
+    def is_valid_file(self, file):
+        return os.path.isfile(file)
+
+    def is_valid_url(self, str):
         regex = (
-            "((http|https)://)(www.)?"
+            "((http|https)://)?(www.)?"
             + "[a-zA-Z0-9@:%._\\+~#?&//=]"
             + "{1,256}\\.[a-z]"
             + "{2,6}\\b([-a-zA-Z0-9@:%"
@@ -39,59 +41,88 @@ class Shortener(FlowLauncher):
         output = []
         if len(query.strip()) == 0:
             output.append(
-                {"Title": "Enter a URL to shorten", "IcoPath": "Images/app.png"}
+                {"Title": "Enter a file path or URL", "IcoPath": "Images/app.png"}
             )
 
         else:
+            file = query.strip()
+            file = file.replace('"', "")
+            save_path = os.path.expanduser("~/Downloads")
 
-            if not (query.startswith("http://") or query.startswith("https://")):
-                query = f"https://{query}"
+            if self.is_valid_file(file):
+                file_name = Path(file).stem
+                files = {"image_file": open(file, "rb")}
 
-            api_url = f"https://tinyurl.com/api-create.php?url={query}"
+            elif self.is_valid_url(file):
+                file_name = os.path.basename(file).split("?")[0]
+                files = None
 
-            try:
-                if not self.isValidURL(query):
-                    raise ValueError
+                if requests.head(file).status_code != 200:
+                    file = file.split("?")[0]
 
-                response = requests.get(api_url)
-                tiny = response.text
+                data = {"image_url": file}
 
-                if tiny == "Error":
-                    raise Exception
-            except Exception:
+            else:
                 output.append(
                     {
-                        "Title": "Error: Enter a valid URL",
-                        "IcoPath": "Images/broken.png",
+                        "Title": "Invalid file path or URL",
+                        "IcoPath": "Images/error.png",
                     }
                 )
+
                 return output
 
-            output.append(
-                {
-                    "Title": "Click to copy",
-                    "SubTitle": f"{tiny}",
-                    "IcoPath": "Images/copy.png",
-                    "JsonRPCAction": {"method": "copy", "parameters": [f"{tiny}"]},
-                }
+            response = requests.post(
+                "https://api.remove.bg/v1.0/removebg",
+                files=files,
+                data=data,
+                headers={"X-Api-Key": "jNAnhZ5d5DFU4bRQZD7YhaYf"},
             )
 
-            output.append(
-                {
-                    "Title": "Click to open in browser",
-                    "SubTitle": f"{tiny}",
-                    "IcoPath": "Images/open.png",
-                    "JsonRPCAction": {"method": "open_url", "parameters": [f"{tiny}"]},
-                }
-            )
+            if response.status_code == 200:
+                with open(f"{save_path}/{file_name}.png", "wb") as out:
+                    out.write(response.content)
+
+                output.append(
+                    {
+                        "Title": "Click to open the image location",
+                        "SubTitle": "Background removed successfully",
+                        "IcoPath": "Images/open.png",
+                        "JsonRPCAction": {
+                            "method": "open_dir",
+                            "parameters": [],
+                        },
+                    }
+                )
+
+                output.append(
+                    {
+                        "Title": "Click to open the image",
+                        "SubTitle": "Background removed successfully",
+                        "IcoPath": "Images/open.png",
+                        "JsonRPCAction": {
+                            "method": "open",
+                            "parameters": [file_name],
+                        },
+                    }
+                )
+
+            else:
+                output.append(
+                    {
+                        "Title": "Failed to remove background",
+                        "SubTitle": "Please check the file or URL and try again",
+                        "IcoPath": "Images/error.png",
+                    }
+                )
 
         return output
 
-    def copy(self, tiny):
-        pyperclip.copy(tiny)
+    def open(self, file_name):
+        os.system(f"start {os.path.expanduser(f'~/Downloads/{file_name}.png')}")
 
-    def open_url(self, url):
-        webbrowser.open(url)
+    def open_dir(self):
+        os.system(f"start {os.path.expanduser('~/Downloads')}")
 
 
 if __name__ == "__main__":
