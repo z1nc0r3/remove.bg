@@ -16,3 +16,5 @@ A Background removing plugin for [Flow Launcher](https://flowlauncher.com/) that
 ## Usage
 
 Type `bg` followed by the path to the image file or the URL of the image.
+
+_Note: The free version only supports a maximum of up to 720x720 download resolution._
