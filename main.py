@@ -16,7 +16,7 @@ from pathlib import Path
 import re
 
 
-class Shortener(FlowLauncher):
+class Remover(FlowLauncher):
 
     def is_valid_file(self, file):
         return os.path.isfile(file)
@@ -126,4 +126,4 @@ class Shortener(FlowLauncher):
 
 
 if __name__ == "__main__":
-    Shortener()
+    Remover()
