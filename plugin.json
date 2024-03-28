@@ -1,7 +1,7 @@
 {
     "ID": "D2B1550D-7F24-4A9C-9952-2CF0A253A555",
     "ActionKeyword": "bg",
-    "Name": "remove.bg",
+    "Name": "Remove.bg",
     "Description": "Remove backgrounds from images",
     "Author": "z1nc0r3",
     "Version": "1.0.0",
