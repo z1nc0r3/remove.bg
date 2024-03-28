@@ -28,7 +28,7 @@ class Remover(FlowLauncher):
 
     def is_valid_url(self, str):
         regex = (
-            "((http|https)://)?(www.)?"
+            "((http|https)://)(www.)?"
             + "[a-zA-Z0-9@:%._\\+~#?&//=]"
             + "{1,256}\\.[a-z]"
             + "{2,6}\\b([-a-zA-Z0-9@:%"
@@ -93,7 +93,7 @@ class Remover(FlowLauncher):
                     {
                         "Title": "Click to open the image location",
                         "SubTitle": "Background removed successfully",
-                        "IcoPath": "Images/open.png",
+                        "IcoPath": "Images/open_dir.png",
                         "JsonRPCAction": {
                             "method": "open_dir",
                             "parameters": [save_path],
@@ -105,7 +105,7 @@ class Remover(FlowLauncher):
                     {
                         "Title": "Click to open the image",
                         "SubTitle": "Background removed successfully",
-                        "IcoPath": "Images/open.png",
+                        "IcoPath": "Images/app.png",
                         "JsonRPCAction": {
                             "method": "open",
                             "parameters": [f"{save_path}/{file_name}.png"],
