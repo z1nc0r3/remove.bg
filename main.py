@@ -52,6 +52,7 @@ class Remover(FlowLauncher):
             if self.is_valid_file(file):
                 file_name = Path(file).stem
                 files = {"image_file": open(file, "rb")}
+                data = {"size": "auto"}
 
             elif self.is_valid_url(file):
                 file_name = os.path.basename(file).split("?")[0]
@@ -90,7 +91,7 @@ class Remover(FlowLauncher):
                         "IcoPath": "Images/open.png",
                         "JsonRPCAction": {
                             "method": "open_dir",
-                            "parameters": [],
+                            "parameters": [save_path],
                         },
                     }
                 )
@@ -102,7 +103,7 @@ class Remover(FlowLauncher):
                         "IcoPath": "Images/open.png",
                         "JsonRPCAction": {
                             "method": "open",
-                            "parameters": [file_name],
+                            "parameters": [f"{save_path}/{file_name}.png"],
                         },
                     }
                 )
@@ -119,10 +120,10 @@ class Remover(FlowLauncher):
         return output
 
     def open(self, file_name):
-        os.system(f"start {os.path.expanduser(f'~/Downloads/{file_name}.png')}")
+        os.system(f"start {file_name}")
 
-    def open_dir(self):
-        os.system(f"start {os.path.expanduser('~/Downloads')}")
+    def open_dir(self, save_path):
+        os.system(f"start {save_path}")
 
 
 if __name__ == "__main__":
