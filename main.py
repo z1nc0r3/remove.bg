@@ -19,6 +19,11 @@ import re
 class Remover(FlowLauncher):
 
     def is_valid_file(self, file):
+        supported = [".jpg", ".jpeg", ".png", ".pjp", ".pjpeg"]
+        
+        if Path(file).suffix.lower() not in supported:
+            return False
+
         return os.path.isfile(file)
 
     def is_valid_url(self, str):
