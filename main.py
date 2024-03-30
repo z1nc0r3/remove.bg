@@ -86,6 +86,8 @@ class Remover(FlowLauncher):
             )
 
             if response.status_code == 200:
+                file_name = file_name.replace(" ", "_")
+                
                 with open(f"{save_path}/{file_name}.png", "wb") as out:
                     out.write(response.content)
 
