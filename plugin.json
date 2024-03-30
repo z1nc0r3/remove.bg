@@ -4,7 +4,7 @@
     "Name": "Remove.bg",
     "Description": "Remove backgrounds from images",
     "Author": "z1nc0r3",
-    "Version": "1.0.0",
+    "Version": "1.0.1",
     "Language": "python",
     "Website": "https://github.com/z1nc0r3/remove.bg",
     "IcoPath": "Images\\app.png",
